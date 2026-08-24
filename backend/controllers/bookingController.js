@@ -1,10 +1,23 @@
 const Booking = require("../models/Booking");
 const Vehicle = require("../models/Vehicle");
 
-// POST /api/bookings
+// POST /api/bookings  (also mounted at /api/rentals)
 exports.createBooking = async (req, res) => {
   try {
-    const { vehicle } = req.body;
+    const { vehicle, customerName, email, pickupDate, returnDate } = req.body;
+
+    // ---- validation ----
+    const errors = [];
+    if (!vehicle) errors.push("vehicle is required");
+    if (!customerName) errors.push("customerName is required");
+    if (!email) errors.push("email is required");
+    else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) errors.push("email is invalid");
+    if (pickupDate && returnDate && new Date(returnDate) < new Date(pickupDate)) {
+      errors.push("returnDate cannot be before pickupDate");
+    }
+    if (errors.length) {
+      return res.status(400).json({ success: false, error: errors.join(", ") });
+    }
 
     const vehicleExists = await Vehicle.findById(vehicle);
     if (!vehicleExists) {
