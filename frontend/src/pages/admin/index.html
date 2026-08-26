@@ -1,0 +1,248 @@
+<!DOCTYPE html><html lang="en"><head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <title>Fleet Admin Panel | RENAX</title>
+    <link rel="shortcut icon" href="../../../img/favicon.png">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&amp;display=swap">
+    <link rel="stylesheet" href="../../../css/plugins.css">
+    <link rel="stylesheet" href="../../../css/style.css">
+    <link rel="stylesheet" href="../../../css/admin.css">
+</head>
+<body style="background:#f7f7f9;">
+
+    <!-- Admin Topbar (not the public site nav — this page is not linked from the main menu) -->
+    <div class="admin-topbar">
+        <div class="container">
+            <div style="display:flex;align-items:center;">
+                <a class="admin-logo" href="../../../index.html"><img src="../../../img/logo-light.png" alt="Renax"></a>
+                <span class="admin-badge">Fleet Admin Panel</span>
+            </div>
+            <div class="admin-links">
+                <a href="../../../index.html"><i class="fa-solid fa-arrow-left"></i> View Website</a>
+                <a href="#vehicles-section">Vehicles</a>
+                <a href="#bookings-section">Bookings</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header Banner -->
+    <section class="banner-header section-padding bg-img" data-overlay-dark="7" data-background="../../../img/slider/9.jpg" style="padding-bottom:110px;">
+        <div class="v-middle">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <h6>Internal Tool — Not Visible on the Public Site</h6>
+                        <h1>Fleet <span>Admin Panel</span></h1>
+                        <p style="color:#ddd;max-width:600px;margin:10px auto 0;">Manage every vehicle across all 5 pillars and track customer bookings in one place. Data shown here is fetched live from the backend API and MongoDB database.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="container">
+        <div class="admin-conn-banner" id="admin-conn-banner">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+            Could not reach the backend server at <code>http://localhost:5000</code>. Start it with <code>npm start</code> inside the <code>backend/</code> folder (and confirm MongoDB is connected) to see live data here.
+        </div>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="container admin-stats-row">
+        <div class="row">
+            <div class="col-lg-3 col-md-6">
+                <div class="admin-stat-card">
+                    <div class="icon"><i class="fa-solid fa-car"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-total-vehicles">--</div>
+                        <div class="stat-label">Total Vehicles</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="admin-stat-card">
+                    <div class="icon"><i class="fa-solid fa-circle-check"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-available-vehicles">--</div>
+                        <div class="stat-label">Available Now</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="admin-stat-card">
+                    <div class="icon"><i class="fa-solid fa-calendar-check"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-total-bookings">--</div>
+                        <div class="stat-label">Total Bookings</div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+                <div class="admin-stat-card">
+                    <div class="icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                    <div>
+                        <div class="stat-number" id="stat-pending-bookings">--</div>
+                        <div class="stat-label">Pending Bookings</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Vehicles Section -->
+    <section class="section-padding" id="vehicles-section" style="padding-top:20px;">
+        <div class="container">
+            <div class="admin-section-title">Vehicle Inventory</div>
+            <div class="admin-section-sub">Shared across all 5 pillars — Luxury, Economy, Used Car, Auto Workshop &amp; Commercial Fleet. The <code>category</code> field decides which page each vehicle shows up on.</div>
+
+            <!-- Add / Edit Vehicle Form -->
+            <div class="admin-card">
+                <h5 id="admin-form-title" style="font-family:'Outfit',sans-serif;font-weight:700;margin-bottom:20px;">Add New Vehicle</h5>
+                <form id="admin-vehicle-form" class="admin-form">
+                    <div class="form-row">
+                        <div>
+                            <label>Title</label>
+                            <input type="text" name="title" class="form-control" placeholder="e.g. Bentley Bentayga" required>
+                        </div>
+                        <div>
+                            <label>Category (Pillar)</label>
+                            <select name="category" required>
+                                <option value="luxury">Luxury &amp; Chauffeur</option>
+                                <option value="economy">Economy Rentals</option>
+                                <option value="used-car">Used Car Dealership</option>
+                                <option value="workshop">Auto Workshop</option>
+                                <option value="commercial">Commercial Fleet</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label>Brand</label>
+                            <input type="text" name="brand" class="form-control" placeholder="e.g. Bentley">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div>
+                            <label>Type</label>
+                            <input type="text" name="type" class="form-control" placeholder="Sedan, SUV, Hatchback...">
+                        </div>
+                        <div>
+                            <label>Price (PKR)</label>
+                            <input type="number" name="price" class="form-control" placeholder="e.g. 25000" required>
+                        </div>
+                        <div>
+                            <label>Price Unit</label>
+                            <select name="priceUnit">
+                                <option value="day">Per Day</option>
+                                <option value="month">Per Month</option>
+                                <option value="fixed">Fixed (Sale Price)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div style="grid-column: span 2;">
+                            <label>Image URL</label>
+                            <input type="text" name="image" class="form-control" placeholder="img/cars/1.png">
+                        </div>
+                        <div>
+                            <label style="margin-top:14px;">
+                                <input type="checkbox" name="available" checked style="width:auto;margin-right:8px;">
+                                Available for booking
+                            </label>
+                        </div>
+                    </div>
+                    <label>Description</label>
+                    <textarea name="description" class="form-control" placeholder="Short description shown on the pillar page"></textarea>
+
+                    <button type="submit" class="admin-btn">Save Vehicle</button>
+                    <button type="button" id="admin-cancel-edit" class="admin-btn-outline" style="display:none;vertical-align:middle;margin-left:10px;">Cancel Edit</button>
+                </form>
+            </div>
+
+            <!-- Filter tabs -->
+            <div class="admin-tabs">
+                <button class="admin-tab-btn active" data-filter="">All</button>
+                <button class="admin-tab-btn" data-filter="luxury">Luxury</button>
+                <button class="admin-tab-btn" data-filter="economy">Economy</button>
+                <button class="admin-tab-btn" data-filter="used-car">Used Car</button>
+                <button class="admin-tab-btn" data-filter="workshop">Workshop</button>
+                <button class="admin-tab-btn" data-filter="commercial">Commercial</button>
+            </div>
+
+            <div class="admin-card admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Image</th>
+                            <th>Vehicle</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Status</th>
+                            <th>Added</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-vehicle-tbody">
+                        <tr><td colspan="7"><div class="admin-empty-state"><i class="fa-solid fa-spinner fa-spin"></i>Loading vehicles...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bookings Section -->
+    <section class="section-padding" id="bookings-section" style="padding-top:0;">
+        <div class="container">
+            <div class="admin-section-title">Customer Bookings</div>
+            <div class="admin-section-sub">Every booking submitted from any pillar page on the website lands here automatically.</div>
+
+            <div class="admin-card admin-table-wrap">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Customer</th>
+                            <th>Vehicle</th>
+                            <th>Pickup &rarr; Return</th>
+                            <th>Location</th>
+                            <th>Status</th>
+                            <th>Update</th>
+                        </tr>
+                    </thead>
+                    <tbody id="admin-booking-tbody">
+                        <tr><td colspan="6"><div class="admin-empty-state"><i class="fa-solid fa-spinner fa-spin"></i>Loading bookings...</div></td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer clearfix">
+        <div class="container">
+            <div class="bottom-footer-text">
+                <div class="row copyright">
+                    <div class="col-md-12">
+                        <p class="mb-0">©2026 <a href="../../../index.html">Renax</a>. Fleet Admin Panel — internal tool, built by Zohaib Nawaz (FS Lead). Not linked from the public menu.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- jQuery + plugins -->
+    <script src="../../../js/jquery-3.7.1.min.js"></script>
+    <script src="../../../js/jquery-migrate-3.4.1.min.js"></script>
+    <script src="../../../js/modernizr-2.6.2.min.js"></script>
+    <script src="../../../js/popper.min.js"></script>
+    <script src="../../../js/bootstrap.min.js"></script>
+
+    <!-- Backend connectors: api-connect.js defines API_BASE_URL, admin.js powers this dashboard -->
+    <script src="../../../js/api-connect.js"></script>
+    <script src="../../../js/admin.js"></script>
+    <script>
+        // Apply the banner background image (normally handled by custom.js, which this
+        // lean admin page doesn't load to avoid errors from unused carousel plugins).
+        document.querySelectorAll("[data-background]").forEach(function (el) {
+            el.style.backgroundImage = "url(" + el.getAttribute("data-background") + ")";
+        });
+    </script>
+</body></html>
