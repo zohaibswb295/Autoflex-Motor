@@ -325,6 +325,7 @@
                 </div>
             </div>
             <div class="booking-inner clearfix">
+                <form action="#0" class="form1 brdr clearfix" id="fleetBookingForm" data-category="commercial" novalidate>
                 <form action="#0" class="form1 brdr clearfix" id="fleetBookingForm" novalidate>
                     <div id="fleetBookingError" class="text-center" style="display:none;color:#ff5c5c;width:100%;margin-bottom:10px;font-weight:600;"></div>
                     <div class="col2 c3">
@@ -365,6 +366,7 @@
                         <div class="select1_wrapper">
                             <label>Pick Up Location</label>
                             <div class="select1_inner">
+                                <select class="select2 select" id="fbPickupLocation" style="width: 100%">
                                 <select class="select2 select" style="width: 100%">
                                     <option value="0">Pick Up Location</option>
                                     <option value="1">Islamabad</option>
@@ -380,6 +382,21 @@
                             <div class="input1_inner">
                                 <input type="text" class="form-control input datepicker" id="fbReturnDate" placeholder="Return Date">
                             </div>
+                        </div>
+                    </div>
+                    <div class="col2 c3">
+                        <div class="input1_wrapper">
+                            <input type="text" class="form-control input" id="fbName" placeholder="Full Name *" required="">
+                        </div>
+                    </div>
+                    <div class="col2 c4">
+                        <div class="input1_wrapper">
+                            <input type="email" class="form-control input" id="fbEmail" placeholder="Email *" required="">
+                        </div>
+                    </div>
+                    <div class="col2 c2">
+                        <div class="input1_wrapper">
+                            <input type="text" class="form-control input" id="fbPhone" placeholder="Phone *" required="">
                         </div>
                     </div>
                     <div class="col3 c6">
@@ -555,4 +572,5 @@
 
     <!-- Backend connector: powers the newsletter form, contact form and #vehicle-list above -->
     <script src="../../../js/api-connect.js"></script>
+    <script src="../../../js/booking-widget.js"></script>
 </body></html>

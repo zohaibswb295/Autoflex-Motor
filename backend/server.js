@@ -22,6 +22,10 @@ app.use("/api/bookings", require("./routes/bookingRoutes"));
 app.use("/api/contact", require("./routes/contactRoutes"));
 app.use("/api/newsletter", require("./routes/newsletterRoutes"));
 
+// Admin panel routes (login + protected fleet/rentals management)
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+
 // 404 handler
 app.use((req, res) => {
   res.status(404).json({ success: false, error: "Route not found" });

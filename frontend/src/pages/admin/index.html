@@ -11,6 +11,47 @@
 </head>
 <body style="background:#f7f7f9;">
 
+    <!-- ============ LOGIN SCREEN (shown until a valid admin token exists) ============ -->
+    <div id="admin-login-screen" class="login-hero bg-img" data-overlay-dark="7" data-background="../../../img/slider/9.jpg">
+        <!-- Same navbar/logo treatment as the public site -->
+        <nav class="navbar navbar-expand-lg" style="position:relative;height:auto;padding:30px 0;">
+            <div class="container">
+                <div class="logo-wrapper">
+                    <a class="logo" href="../../../index.html"><img src="../../../img/logo-light.png" class="logo-img" alt="Renax"></a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="v-middle login-hero-body">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-5 col-md-7">
+                        <div class="login-card">
+                            <h6>* Internal Tool</h6>
+                            <h2>Admin <span>Login</span></h2>
+                            <p>Sign in to manage vehicles, bookings and services.</p>
+                            <form id="admin-login-form">
+                                <div class="login-field">
+                                    <label>Email</label>
+                                    <input type="email" id="admin-login-email" class="form-control" placeholder="admin@renax.com" required>
+                                </div>
+                                <div class="login-field">
+                                    <label>Password</label>
+                                    <input type="password" id="admin-login-password" class="form-control" placeholder="••••••••" required>
+                                </div>
+                                <div id="admin-login-error" class="login-error"></div>
+                                <button type="submit" class="button-1 login-submit-btn">Sign In <span class="ti-arrow-top-right"></span></button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============ DASHBOARD (hidden until logged in) ============ -->
+    <div id="admin-dashboard" style="display:none;">
+
     <!-- Admin Topbar (not the public site nav — this page is not linked from the main menu) -->
     <div class="admin-topbar">
         <div class="container">
@@ -22,6 +63,7 @@
                 <a href="../../../index.html"><i class="fa-solid fa-arrow-left"></i> View Website</a>
                 <a href="#vehicles-section">Vehicles</a>
                 <a href="#bookings-section">Bookings</a>
+                <a href="#" id="admin-logout-btn"><i class="fa-solid fa-right-from-bracket"></i> Logout</a>
             </div>
         </div>
     </div>
@@ -228,6 +270,8 @@
         </div>
     </footer>
 
+    </div><!-- /#admin-dashboard -->
+
     <!-- jQuery + plugins -->
     <script src="../../../js/jquery-3.7.1.min.js"></script>
     <script src="../../../js/jquery-migrate-3.4.1.min.js"></script>
@@ -245,4 +289,5 @@
             el.style.backgroundImage = "url(" + el.getAttribute("data-background") + ")";
         });
     </script>
+</body></html>
 </body></html>
