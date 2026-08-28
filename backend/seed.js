@@ -8,6 +8,7 @@ const Vehicle = require("./models/Vehicle");
 const User = require("./models/User");
 const connectDB = require("./config/db");
 const Vehicle = require("./models/Vehicle");
+const User = require("./models/User");
 
 dotenv.config();
 
@@ -122,6 +123,20 @@ const runSeed = async () => {
   try {
     await Vehicle.deleteMany();
     await Vehicle.insertMany(sampleVehicles);
+
+    // Seed one admin account so /api/admin/* routes can be tested right away.
+    // Login with: admin@renax.com / admin1234
+    const adminExists = await User.findOne({ email: "admin@renax.com" });
+    if (!adminExists) {
+      await User.create({
+        name: "Renax Admin",
+        email: "admin@renax.com",
+        password: "admin1234",
+        role: "admin",
+      });
+      console.log("Admin user created: admin@renax.com / admin1234");
+    }
+
     console.log("Sample data inserted successfully!");
 
     // Create the admin login account (skip if it already exists)

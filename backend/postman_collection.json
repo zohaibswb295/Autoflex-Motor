@@ -1,0 +1,160 @@
+{
+  "info": {
+    "name": "Renax Backend API",
+    "description": "Shared Fleet Inventory & Rental Booking API - Renax MERN backend",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "token", "value": "" },
+    { "key": "vehicleId", "value": "" },
+    { "key": "bookingId", "value": "" },
+    { "key": "serviceBookingId", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        { "name": "Health check", "request": { "method": "GET", "url": "{{baseUrl}}/test" } }
+      ]
+    },
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/register",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"password\": \"password123\",\n  \"phone\": \"03001234567\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/auth/login",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@renax.com\",\n  \"password\": \"admin1234\"\n}"
+            }
+          }
+        },
+        {
+          "name": "Get current user (me)",
+          "request": {
+            "method": "GET",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Fleet / Vehicles",
+      "item": [
+        { "name": "List fleet (filter: category, type, brand, minPrice, maxPrice)", "request": { "method": "GET", "url": "{{baseUrl}}/fleet?category=luxury" } },
+        { "name": "Get vehicle by id", "request": { "method": "GET", "url": "{{baseUrl}}/fleet/{{vehicleId}}" } },
+        {
+          "name": "Create vehicle (legacy, unauthenticated)",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/vehicles",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"Toyota Yaris\",\n  \"category\": \"economy\",\n  \"brand\": \"Toyota\",\n  \"type\": \"Sedan\",\n  \"price\": 5500,\n  \"priceUnit\": \"day\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Rentals / Bookings",
+      "item": [
+        {
+          "name": "Create rental request",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/rentals",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"vehicle\": \"{{vehicleId}}\",\n  \"customerName\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"phone\": \"03001234567\",\n  \"pickupDate\": \"2026-09-01\",\n  \"returnDate\": \"2026-09-05\",\n  \"pickupLocation\": \"Islamabad\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Service Bookings (Auto Workshop)",
+      "item": [
+        {
+          "name": "Create service inquiry",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/service-booking",
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"service\": \"{{vehicleId}}\",\n  \"customerName\": \"Ali Khan\",\n  \"email\": \"ali@example.com\",\n  \"phone\": \"03211234567\",\n  \"vehicleModel\": \"Honda Civic 2019\",\n  \"preferredDate\": \"2026-09-02\"\n}"
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin (JWT + admin role required)",
+      "item": [
+        { "name": "Get all rentals", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/admin/rentals" } },
+        {
+          "name": "Update rental status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/admin/rentals/{{bookingId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"confirmed\"\n}" }
+          }
+        },
+        { "name": "Get fleet (admin)", "request": { "method": "GET", "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }], "url": "{{baseUrl}}/admin/fleet" } },
+        {
+          "name": "Update service booking status",
+          "request": {
+            "method": "PATCH",
+            "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }, { "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/admin/service-bookings/{{serviceBookingId}}/status",
+            "body": { "mode": "raw", "raw": "{\n  \"status\": \"confirmed\"\n}" }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Contact & Newsletter",
+      "item": [
+        {
+          "name": "Submit contact form",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/contact",
+            "body": { "mode": "raw", "raw": "{\n  \"name\": \"Jane Doe\",\n  \"email\": \"jane@example.com\",\n  \"message\": \"Hello!\"\n}" }
+          }
+        },
+        {
+          "name": "Subscribe to newsletter",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "url": "{{baseUrl}}/newsletter",
+            "body": { "mode": "raw", "raw": "{\n  \"email\": \"jane@example.com\"\n}" }
+          }
+        }
+      ]
+    }
+  ]
+}
