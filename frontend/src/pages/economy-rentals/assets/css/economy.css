@@ -1,0 +1,280 @@
+/* =====================================================================
+   Economy & Daily Self-Drive Rentals pillar — local styles only.
+   Scoped with the .ecr- prefix / #ecr- ids so nothing here leaks onto
+   or overrides the shared site-wide css/style.css.
+   Built by Muhammad Hamza (Frontend).
+   ===================================================================== */
+
+/* ---------- Breadcrumb + sub-nav (Task: sub-navigation & breadcrumbs) --- */
+.ecr-breadcrumb-bar {
+  background: #f7f7f9;
+  padding: 14px 0;
+  border-bottom: 1px solid #ececec;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb li {
+  margin-right: 6px;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb li:not(:last-child)::after {
+  content: "/";
+  margin-left: 6px;
+  color: #b5b5b5;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb a {
+  color: #666;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb a:hover {
+  color: #2f80ed;
+}
+.ecr-breadcrumb-bar .ecr-breadcrumb li.active {
+  color: #1c1c1c;
+  font-weight: 600;
+}
+
+.ecr-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.ecr-subnav a {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid #e2e2e2;
+  color: #444;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+.ecr-subnav a:hover,
+.ecr-subnav a.active {
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---------- Feature grid ---------- */
+.ecr-feature-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 30px 25px;
+  height: 100%;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.ecr-feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0,0,0,.08);
+  border-color: transparent;
+}
+.ecr-feature-card .icon {
+  font-size: 34px;
+  color: #2f80ed;
+  margin-bottom: 18px;
+  transition: transform .3s ease;
+}
+.ecr-feature-card:hover .icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+.ecr-feature-card h5 {
+  margin-bottom: 10px;
+}
+.ecr-feature-card .price {
+  display: block;
+  margin-top: 14px;
+  font-weight: 700;
+  color: #2f80ed;
+}
+
+/* ---------- Outstation price calculator (Sub-page #3) ---------- */
+.ecr-calculator {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.ecr-calculator label {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: block;
+}
+.ecr-calculator .form-control,
+.ecr-calculator input[type="range"] {
+  margin-bottom: 20px;
+}
+.ecr-calculator .ecr-range-value {
+  font-weight: 700;
+  color: #2f80ed;
+}
+.ecr-result-box {
+  background: #1c1c1c;
+  color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+.ecr-result-box .ecr-total {
+  font-size: 42px;
+  font-weight: 800;
+  color: #2f80ed;
+  line-height: 1;
+  margin: 10px 0;
+}
+.ecr-result-box .ecr-breakdown {
+  text-align: left;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.ecr-result-box .ecr-breakdown div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* ---------- Map / location widget (Sub-page #2) ---------- */
+.ecr-map-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 380px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+.ecr-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.ecr-location-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.ecr-location-card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,.07);
+  transform: translateX(4px);
+}
+
+/* ---------- Feature comparison table (Sub-page #1) ---------- */
+.ecr-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.ecr-compare-table th,
+.ecr-compare-table td {
+  padding: 14px 16px;
+  border: 1px solid #eee;
+  text-align: center;
+  font-size: 14px;
+}
+.ecr-compare-table th {
+  background: #1c1c1c;
+  color: #fff;
+}
+.ecr-compare-table td:first-child,
+.ecr-compare-table th:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.ecr-compare-table .fa-solid.fa-check { color: #2fb344; }
+.ecr-compare-table .fa-solid.fa-xmark { color: #cccccc; }
+.ecr-compare-table tbody tr {
+  transition: background .2s ease;
+}
+.ecr-compare-table tbody tr:hover {
+  background: #eaf2fd;
+}
+
+/* ---------- Booking / Inquiry form ---------- */
+.ecr-inquiry-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.ecr-inquiry-form .ecr-field {
+  margin-bottom: 20px;
+}
+.ecr-inquiry-form label {
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 6px;
+}
+.ecr-inquiry-form .ecr-error {
+  color: #e6423a;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+.ecr-inquiry-form .ecr-field.has-error .ecr-error {
+  display: block;
+}
+.ecr-inquiry-form .ecr-field.has-error .form-control,
+.ecr-inquiry-form .ecr-field.has-error select {
+  border-color: #e6423a !important;
+}
+.ecr-inquiry-form button[disabled] {
+  opacity: .6;
+  cursor: not-allowed;
+}
+.ecr-form-msg {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: none;
+}
+.ecr-form-msg.success {
+  display: block;
+  background: #e9f5ff;
+  color: #14548f;
+  border: 1px solid #bcdcfb;
+}
+.ecr-form-msg.error {
+  display: block;
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f6c6c2;
+}
+
+/* ---------- Micro-animations shared across the pillar ---------- */
+.ecr-fade-up {
+  animation: ecrFadeUp .6s ease both;
+}
+@keyframes ecrFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Mobile responsiveness polish (Task: responsiveness audit) --- */
+@media (max-width: 991px) {
+  .ecr-calculator, .ecr-inquiry-form { padding: 26px; }
+  .ecr-result-box { padding: 26px; margin-top: 24px; }
+  .ecr-compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+@media (max-width: 767px) {
+  .ecr-breadcrumb-bar .ecr-breadcrumb { font-size: 12px; }
+  .ecr-subnav a { padding: 7px 12px; font-size: 12px; }
+  .ecr-map-wrap { height: 260px; }
+  .ecr-result-box .ecr-total { font-size: 32px; }
+}
+@media (max-width: 575px) {
+  .ecr-feature-card { padding: 22px 18px; }
+  .ecr-calculator, .ecr-inquiry-form, .ecr-result-box { padding: 20px; }
+}
