@@ -43,6 +43,14 @@ app.use(notFound);
 
 // Centralized error handler (must be last)
 app.use(errorHandler);
+// Admin panel routes (login + protected fleet/rentals management)
+app.use("/api/auth", require("./routes/authRoutes"));
+app.use("/api/admin", require("./routes/adminRoutes"));
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ success: false, error: "Route not found" });
+});
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

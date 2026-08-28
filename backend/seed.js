@@ -2,6 +2,10 @@
 // It fills your MongoDB with sample data for all 4 pillars so the frontend has something to show.
 
 const dotenv = require("dotenv");
+const bcrypt = require("bcryptjs");
+const connectDB = require("./config/db");
+const Vehicle = require("./models/Vehicle");
+const User = require("./models/User");
 const connectDB = require("./config/db");
 const Vehicle = require("./models/Vehicle");
 const User = require("./models/User");
@@ -134,6 +138,21 @@ const runSeed = async () => {
     }
 
     console.log("Sample data inserted successfully!");
+
+    // Create the admin login account (skip if it already exists)
+    const existingAdmin = await User.findOne({ email: "admin@renax.com" });
+    if (!existingAdmin) {
+      const hashedPassword = await bcrypt.hash("admin1234", 10);
+      await User.create({
+        name: "Admin",
+        email: "admin@renax.com",
+        password: hashedPassword,
+        role: "admin",
+      });
+      console.log("Admin user created: admin@renax.com / admin1234");
+    } else {
+      console.log("Admin user already exists, skipped.");
+    }
   } catch (err) {
     console.error(err);
   } finally {

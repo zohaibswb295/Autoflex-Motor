@@ -12,6 +12,9 @@ const userSchema = new mongoose.Schema(
       enum: ["user", "admin"],
       default: "user",
     },
+    email: { type: String, required: true, unique: true, lowercase: true },
+    password: { type: String, required: true }, // stored as bcrypt hash, never plain text
+    role: { type: String, enum: ["admin", "staff"], default: "staff" },
   },
   { timestamps: true }
 );

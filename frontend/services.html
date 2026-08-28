@@ -262,11 +262,14 @@
                 </div>
             </div>
             <div class="booking-inner clearfix">
+                <form action="#0" class="form1 brdr clearfix" id="servicesBookingForm" novalidate>
+                    <div id="servicesBookingMsg" class="text-center" style="display:none;width:100%;margin-bottom:10px;font-weight:600;"></div>
                 <form action="#0" class="form1 brdr clearfix">
                     <div class="col2 c3">
                         <div class="select1_wrapper">
                             <label>Choose Car Type</label>
                             <div class="select1_inner">
+                                <select class="select2 select" id="sb-car-type" style="width: 100%">
                                 <select class="select2 select" style="width: 100%">
                                     <option value="0">Choose Car Type</option>
                                     <option value="1">All</option>
@@ -282,6 +285,7 @@
                         <div class="select1_wrapper">
                             <label>Pick Up Location</label>
                             <div class="select1_inner">
+                                <select class="select2 select" id="sb-pickup-location" style="width: 100%">
                                 <select class="select2 select" style="width: 100%">
                                     <option value="0">Pick Up Location</option>
                                     <option value="1">Dubai</option>
@@ -296,6 +300,7 @@
                         <div class="input1_wrapper">
                             <label>Pick Up Date</label>
                             <div class="input1_inner">
+                                <input type="text" class="form-control input datepicker" id="sb-pickup-date" placeholder="Pick Up Date" required="">
                                 <input type="text" class="form-control input datepicker" placeholder="Pick Up Date" required="">
                             </div>
                         </div>
@@ -304,6 +309,7 @@
                         <div class="select1_wrapper">
                             <label>Drop Off Location</label>
                             <div class="select1_inner">
+                                <select class="select2 select" id="sb-dropoff-location" style="width: 100%">
                                 <select class="select2 select" style="width: 100%">
                                     <option value="0">Drop Off Location</option>
                                     <option value="1">Alain</option>
@@ -318,6 +324,25 @@
                         <div class="input1_wrapper">
                             <label>Return Date</label>
                             <div class="input1_inner">
+                                <input type="text" class="form-control input datepicker" id="sb-return-date" placeholder="Return Date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col2 c3">
+                        <div class="input1_wrapper">
+                            <input type="text" class="form-control input" id="sb-name" placeholder="Full Name *" required="">
+                        </div>
+                    </div>
+                    <div class="col2 c4">
+                        <div class="input1_wrapper">
+                            <input type="email" class="form-control input" id="sb-email" placeholder="Email *" required="">
+                        </div>
+                    </div>
+                    <div class="col2 c2">
+                        <div class="input1_wrapper">
+                            <input type="text" class="form-control input" id="sb-phone" placeholder="Phone *" required="">
+                        </div>
+                    </div>
                                 <input type="text" class="form-control input datepicker" placeholder="Return Date">
                             </div>
                         </div>
@@ -584,4 +609,5 @@
     <script src="js/custom.js"></script>
 
 <script src="js/api-connect.js"></script>
+<script src="js/booking-widget.js"></script>
 </body></html>

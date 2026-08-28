@@ -284,3 +284,118 @@ table.admin-table img.thumb {
     color: #fff;
     border-color: #1b1b1b;
 }
+
+/* ===================================================
+   Admin Login Screen — matches the site's hero/banner
+   template (dark overlay image, gold accent, Outfit font)
+.login-hero {
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.login-hero-body {
+    padding: 40px 0;
+}
+.login-card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 46px 40px;
+    box-shadow: 0 25px 60px rgba(0,0,0,.35);
+    position: relative;
+    z-index: 2;
+    text-align: center;
+}
+.login-card h6 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: .5px;
+    text-transform: uppercase;
+    color: #f5b754 !important;
+    margin-bottom: 10px;
+}
+.login-card h2 {
+    font-family: 'Outfit', sans-serif;
+    font-weight: 800;
+    font-size: 32px;
+    color: #1b1b1b;
+    margin-bottom: 10px;
+}
+.login-card h2 span {
+    color: #f5b754;
+}
+.login-card p {
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    color: #888 !important;
+    margin-bottom: 30px;
+}
+.login-field {
+    text-align: left;
+    margin-bottom: 18px;
+}
+.login-field label {
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    font-weight: 600;
+    color: #1b1b1b;
+    margin-bottom: 6px;
+    display: block;
+}
+.login-field .form-control {
+    width: 100%;
+    height: 50px;
+    border: 1px solid #e7e7e7;
+    border-radius: 8px;
+    padding: 0 18px;
+    font-family: 'Outfit', sans-serif;
+    font-size: 14px;
+    background: #fafafa;
+    transition: border-color 200ms ease;
+}
+.login-field .form-control:focus {
+    outline: none;
+    border-color: #f5b754;
+    background: #fff;
+}
+.login-error {
+    display: none;
+    font-family: 'Outfit', sans-serif;
+    font-size: 13px;
+    color: #d9534f;
+    background: #fdecea;
+    border-radius: 6px;
+    padding: 10px 14px;
+    margin-bottom: 6px;
+    text-align: left;
+}
+.login-error.show { display: block; }
+.login-submit-btn {
+    width: 100%;
+    margin-top: 12px;
+    border: none;
+    cursor: pointer;
+}
+
+/* ---- Admin dashboard logout link (in the topbar) ---- */
+.admin-topbar .admin-links #admin-logout-btn {
+    color: #f5b754;
+    font-weight: 600;
+}
+
+/* ---- ROOT CAUSE FIX (confirmed via elementFromPoint) ----
+   .navbar class (style.css) has z-index:99 and, once the login
+   screen is switched to display:flex by admin.js, it stretches
+   to the FULL height of the page (flexbox default) — sitting on
+   top of the login card and eating every click.
+   Fix: stop it from stretching + drop its z-index below the card. */
+.login-hero.bg-img > nav.navbar {
+    align-self: flex-start;   /* stop it from stretching to full height */
+    z-index: 1;                /* below .login-card's stacking (v-middle z-index:9) */
+    pointer-events: none;      /* extra safety: clicks pass through empty nav space */
+}
+.login-hero.bg-img > nav.navbar a,
+.login-hero.bg-img > nav.navbar img {
+    pointer-events: auto;      /* logo link inside nav still clickable */
+}

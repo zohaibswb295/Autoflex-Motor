@@ -1,6 +1,16 @@
 /*
   Renax - Fleet Admin Panel logic
   Requires js/api-connect.js to be loaded FIRST (it defines API_BASE_URL).
+  Powers: login gate, stat cards, vehicle table (add/edit/delete), bookings table (status update).
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
+  const loginScreen = document.getElementById("admin-login-screen");
+  const dashboard = document.getElementById("admin-dashboard");
+  const loginForm = document.getElementById("admin-login-form");
+  const loginError = document.getElementById("admin-login-error");
+  const logoutBtn = document.getElementById("admin-logout-btn");
+
   Powers: stat cards, vehicle table (add/edit/delete), bookings table (status update).
 */
 
@@ -24,6 +34,82 @@ document.addEventListener("DOMContentLoaded", function () {
     commercial: "Commercial",
   };
 
+  // ---------- AUTH ----------
+  function getToken() {
+    return localStorage.getItem("renax_admin_token");
+  }
+  function saveSession(token, user) {
+    localStorage.setItem("renax_admin_token", token);
+    localStorage.setItem("renax_admin_user", JSON.stringify(user));
+  }
+  function clearSession() {
+    localStorage.removeItem("renax_admin_token");
+    localStorage.removeItem("renax_admin_user");
+  }
+  function authHeaders() {
+    return { Authorization: `Bearer ${getToken()}` };
+  }
+  function showDashboard() {
+    if (loginScreen) loginScreen.style.display = "none";
+    if (dashboard) dashboard.style.display = "block";
+    loadStats();
+    loadVehicles();
+    loadBookings();
+  }
+  function showLogin(message) {
+    if (dashboard) dashboard.style.display = "none";
+    if (loginScreen) loginScreen.style.display = "flex";
+    if (message && loginError) {
+      loginError.textContent = message;
+      loginError.style.display = "block";
+    }
+  }
+  // Call this whenever a protected fetch comes back 401/403 (expired/invalid token)
+  function forceLogout(message) {
+    clearSession();
+    showLogin(message || "Session expired. Please sign in again.");
+  }
+
+  if (loginForm) {
+    loginForm.addEventListener("submit", async function (e) {
+      e.preventDefault();
+      if (loginError) loginError.style.display = "none";
+      const email = document.getElementById("admin-login-email").value;
+      const password = document.getElementById("admin-login-password").value;
+      try {
+        const res = await fetch(`${API_BASE_URL}/auth/login`, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, password }),
+        });
+        const result = await res.json();
+        if (!result.success) throw new Error(result.error || "Login failed");
+        if (result.data.role !== "admin") {
+          throw new Error("This account does not have admin access.");
+        }
+        saveSession(result.data.token, {
+          name: result.data.name,
+          email: result.data.email,
+          role: result.data.role,
+        });
+        showDashboard();
+      } catch (err) {
+        if (loginError) {
+          loginError.textContent = err.message || "Login failed. Check your email and password.";
+          loginError.style.display = "block";
+        }
+      }
+    });
+  }
+
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", function (e) {
+      e.preventDefault();
+      clearSession();
+      showLogin();
+    });
+  }
+
   function showConnError() {
     if (connBanner) connBanner.classList.add("show");
   }
@@ -35,6 +121,10 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadStats() {
     try {
       const [vehiclesRes, bookingsRes] = await Promise.all([
+        fetch(`${API_BASE_URL}/admin/fleet`, { headers: authHeaders() }),
+        fetch(`${API_BASE_URL}/admin/rentals`, { headers: authHeaders() }),
+      ]);
+      if (vehiclesRes.status === 401 || vehiclesRes.status === 403) return forceLogout();
         fetch(`${API_BASE_URL}/vehicles`),
         fetch(`${API_BASE_URL}/bookings`),
       ]);
@@ -67,6 +157,10 @@ document.addEventListener("DOMContentLoaded", function () {
     if (!vehicleTableBody) return;
     try {
       const url = currentFilter
+        ? `${API_BASE_URL}/admin/fleet?category=${encodeURIComponent(currentFilter)}`
+        : `${API_BASE_URL}/admin/fleet`;
+      const res = await fetch(url, { headers: authHeaders() });
+      if (res.status === 401 || res.status === 403) return forceLogout();
         ? `${API_BASE_URL}/vehicles?category=${encodeURIComponent(currentFilter)}`
         : `${API_BASE_URL}/vehicles`;
       const res = await fetch(url);
@@ -141,6 +235,11 @@ document.addEventListener("DOMContentLoaded", function () {
   async function deleteVehicle(id) {
     if (!confirm("Delete this vehicle? This cannot be undone.")) return;
     try {
+      const res = await fetch(`${API_BASE_URL}/admin/fleet/${id}`, {
+        method: "DELETE",
+        headers: authHeaders(),
+      });
+      if (res.status === 401 || res.status === 403) return forceLogout();
       const res = await fetch(`${API_BASE_URL}/vehicles/${id}`, { method: "DELETE" });
       const result = await res.json();
       if (!result.success) throw new Error(result.error);
@@ -168,6 +267,14 @@ document.addEventListener("DOMContentLoaded", function () {
       };
 
       try {
+        const url = editingId ? `${API_BASE_URL}/admin/fleet/${editingId}` : `${API_BASE_URL}/admin/fleet`;
+        const method = editingId ? "PUT" : "POST";
+        const res = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json", ...authHeaders() },
+          body: JSON.stringify(payload),
+        });
+        if (res.status === 401 || res.status === 403) return forceLogout();
         const url = editingId ? `${API_BASE_URL}/vehicles/${editingId}` : `${API_BASE_URL}/vehicles`;
         const method = editingId ? "PUT" : "POST";
         const res = await fetch(url, {
@@ -205,6 +312,8 @@ document.addEventListener("DOMContentLoaded", function () {
   async function loadBookings() {
     if (!bookingTableBody) return;
     try {
+      const res = await fetch(`${API_BASE_URL}/admin/rentals`, { headers: authHeaders() });
+      if (res.status === 401 || res.status === 403) return forceLogout();
       const res = await fetch(`${API_BASE_URL}/bookings`);
       const result = await res.json();
       if (!result.success) throw new Error(result.error);
@@ -246,6 +355,12 @@ document.addEventListener("DOMContentLoaded", function () {
       select.addEventListener("change", async () => {
         const id = select.getAttribute("data-status-id");
         try {
+          const res = await fetch(`${API_BASE_URL}/admin/rentals/${id}/status`, {
+            method: "PATCH",
+            headers: { "Content-Type": "application/json", ...authHeaders() },
+            body: JSON.stringify({ status: select.value }),
+          });
+          if (res.status === 401 || res.status === 403) return forceLogout();
           const res = await fetch(`${API_BASE_URL}/bookings/${id}/status`, {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -272,6 +387,16 @@ document.addEventListener("DOMContentLoaded", function () {
       .replace(/"/g, "&quot;");
   }
 
+  // ---------- INIT ----------
+  // Only run on pages that actually have the admin elements.
+  if (loginScreen || dashboard) {
+    if (getToken()) {
+      showDashboard();
+    } else {
+      showLogin();
+    }
+  }
+});
   // ---------- INIT (only runs if this page has the admin elements) ----------
   if (vehicleTableBody || bookingTableBody) {
     loadStats();
