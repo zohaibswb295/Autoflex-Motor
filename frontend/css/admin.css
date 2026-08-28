@@ -288,7 +288,6 @@ table.admin-table img.thumb {
 /* ===================================================
    Admin Login Screen — matches the site's hero/banner
    template (dark overlay image, gold accent, Outfit font)
-=================================================== */
 .login-hero {
     min-height: 100vh;
     background-size: cover;

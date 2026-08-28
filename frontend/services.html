@@ -264,11 +264,13 @@
             <div class="booking-inner clearfix">
                 <form action="#0" class="form1 brdr clearfix" id="servicesBookingForm" novalidate>
                     <div id="servicesBookingMsg" class="text-center" style="display:none;width:100%;margin-bottom:10px;font-weight:600;"></div>
+                <form action="#0" class="form1 brdr clearfix">
                     <div class="col2 c3">
                         <div class="select1_wrapper">
                             <label>Choose Car Type</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="sb-car-type" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Choose Car Type</option>
                                     <option value="1">All</option>
                                     <option value="2">Luxury Cars</option>
@@ -284,6 +286,7 @@
                             <label>Pick Up Location</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="sb-pickup-location" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Pick Up Location</option>
                                     <option value="1">Dubai</option>
                                     <option value="2">Abu Dhabi</option>
@@ -298,6 +301,7 @@
                             <label>Pick Up Date</label>
                             <div class="input1_inner">
                                 <input type="text" class="form-control input datepicker" id="sb-pickup-date" placeholder="Pick Up Date" required="">
+                                <input type="text" class="form-control input datepicker" placeholder="Pick Up Date" required="">
                             </div>
                         </div>
                     </div>
@@ -306,6 +310,7 @@
                             <label>Drop Off Location</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="sb-dropoff-location" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Drop Off Location</option>
                                     <option value="1">Alain</option>
                                     <option value="2">Sharjah</option>
@@ -336,6 +341,10 @@
                     <div class="col2 c2">
                         <div class="input1_wrapper">
                             <input type="text" class="form-control input" id="sb-phone" placeholder="Phone *" required="">
+                        </div>
+                    </div>
+                                <input type="text" class="form-control input datepicker" placeholder="Return Date">
+                            </div>
                         </div>
                     </div>
                     <div class="col3 c6">

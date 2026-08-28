@@ -322,11 +322,13 @@
             <div class="booking-inner clearfix">
                 <form action="#0" class="form1 brdr clearfix" id="homeBookingForm" novalidate>
                     <div id="homeBookingMsg" class="text-center" style="display:none;width:100%;margin-bottom:10px;font-weight:600;"></div>
+                <form action="#0" class="form1 brdr clearfix">
                     <div class="col2 c3">
                         <div class="select1_wrapper">
                             <label>Choose Car Type</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="hb-car-type" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Choose Car Type</option>
                                     <option value="1">All</option>
                                     <option value="2">Luxury Cars</option>
@@ -342,6 +344,7 @@
                             <label>Pick Up Location</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="hb-pickup-location" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Pick Up Location</option>
                                     <option value="1">Dubai</option>
                                     <option value="2">Abu Dhabi</option>
@@ -356,6 +359,7 @@
                             <label>Pick Up Date</label>
                             <div class="input1_inner">
                                 <input type="text" class="form-control input datepicker" id="hb-pickup-date" placeholder="Pick Up Date" required="">
+                                <input type="text" class="form-control input datepicker" placeholder="Pick Up Date" required="">
                             </div>
                         </div>
                     </div>
@@ -364,6 +368,7 @@
                             <label>Drop Off Location</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="hb-dropoff-location" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Drop Off Location</option>
                                     <option value="1">Alain</option>
                                     <option value="2">Sharjah</option>
@@ -394,6 +399,10 @@
                     <div class="col2 c2">
                         <div class="input1_wrapper">
                             <input type="text" class="form-control input" id="hb-phone" placeholder="Phone *" required="">
+                        </div>
+                    </div>
+                                <input type="text" class="form-control input datepicker" placeholder="Return Date">
+                            </div>
                         </div>
                     </div>
                     <div class="col3 c6">
@@ -1260,6 +1269,11 @@
                                 <div class="row">
                                     <div class="col-12">
                                         <div class="alert alert-success contact__msg" id="rentNowMsg" style="display: none" role="alert"> Your message was sent successfully. </div>
+                            <form method="post" action="#0" class="form1 contact__form clearfix">
+                                <!-- form message -->
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="alert alert-success contact__msg" style="display: none" role="alert"> Your message was sent successfully. </div>
                                     </div>
                                 </div>
                                 <!-- form elements -->
@@ -1272,12 +1286,20 @@
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <input name="phone" id="rn-phone" type="text" placeholder="Phone *" required="">
+                                        <input name="name" type="text" placeholder="Full Name *" required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <input name="email" type="email" placeholder="Email *" required="">
+                                    </div>
+                                    <div class="col-lg-6 col-md-12">
+                                        <input name="phone" type="text" placeholder="Phone *" required="">
                                     </div>
                                     <div class="col-lg-6 col-md-12">
                                         <div class="select1_wrapper">
                                             <label>Choose Car Type</label>
                                             <div class="select1_inner">
                                                 <select class="select2 select" id="rn-car-type" style="width: 100%">
+                                                <select class="select2 select" style="width: 100%">
                                                     <option value="0">Choose Car Type</option>
                                                     <option value="1">All</option>
                                                     <option value="2">Luxury Cars</option>
@@ -1293,6 +1315,7 @@
                                             <label>Pick Up Location</label>
                                             <div class="select1_inner">
                                                 <select class="select2 select" id="rn-pickup-location" style="width: 100%">
+                                                <select class="select2 select" style="width: 100%">
                                                     <option value="0">Pick Up Location</option>
                                                     <option value="1">Dubai</option>
                                                     <option value="2">Abu Dhabi</option>
@@ -1307,6 +1330,7 @@
                                             <label>Pick Up Date</label>
                                             <div class="input1_inner">
                                                 <input type="text" class="form-control input datepicker" id="rn-pickup-date" placeholder="Pick Up Date" required="">
+                                                <input type="text" class="form-control input datepicker" placeholder="Pick Up Date" required="">
                                             </div>
                                         </div>
                                     </div>
@@ -1315,6 +1339,7 @@
                                             <label>Drop Off Location</label>
                                             <div class="select1_inner">
                                                 <select class="select2 select" id="rn-dropoff-location" style="width: 100%">
+                                                <select class="select2 select" style="width: 100%">
                                                     <option value="0">Drop Off Location</option>
                                                     <option value="1">Alain</option>
                                                     <option value="2">Sharjah</option>
@@ -1329,11 +1354,13 @@
                                             <label>Return Date</label>
                                             <div class="input1_inner">
                                                 <input type="text" class="form-control input datepicker" id="rn-return-date" placeholder="Return Date">
+                                                <input type="text" class="form-control input datepicker" placeholder="Return Date">
                                             </div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12 col-md-12 form-group">
                                         <textarea name="message" id="rn-notes" cols="30" rows="4" placeholder="Additional Note"></textarea>
+                                        <textarea name="message" id="message" cols="30" rows="4" placeholder="Additional Note"></textarea>
                                     </div>
                                     <div class="col-lg-12 col-md-12">
                                         <button type="submit" class="booking-button mt-15">Rent Now</button>

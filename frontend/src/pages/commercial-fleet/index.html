@@ -326,6 +326,7 @@
             </div>
             <div class="booking-inner clearfix">
                 <form action="#0" class="form1 brdr clearfix" id="fleetBookingForm" data-category="commercial" novalidate>
+                <form action="#0" class="form1 brdr clearfix" id="fleetBookingForm" novalidate>
                     <div id="fleetBookingError" class="text-center" style="display:none;color:#ff5c5c;width:100%;margin-bottom:10px;font-weight:600;"></div>
                     <div class="col2 c3">
                         <div class="select1_wrapper">
@@ -366,6 +367,7 @@
                             <label>Pick Up Location</label>
                             <div class="select1_inner">
                                 <select class="select2 select" id="fbPickupLocation" style="width: 100%">
+                                <select class="select2 select" style="width: 100%">
                                     <option value="0">Pick Up Location</option>
                                     <option value="1">Islamabad</option>
                                     <option value="2">Rawalpindi</option>
@@ -401,6 +403,41 @@
                         <button type="submit" class="booking-button">Get Quote</button>
                     </div>
                 </form>
+                <script>
+                    (function() {
+                        var form = document.getElementById('fleetBookingForm');
+                        var errorBox = document.getElementById('fleetBookingError');
+                        if (!form) return;
+
+                        form.addEventListener('submit', function(e) {
+                            var vehicleType = document.getElementById('fbVehicleType').value;
+                            var leaseTerm = document.getElementById('fbLeaseTerm').value;
+                            var pickupDate = document.getElementById('fbPickupDate').value.trim();
+                            var returnDate = document.getElementById('fbReturnDate').value.trim();
+                            var errors = [];
+
+                            if (vehicleType === '0') errors.push('Please select a vehicle type.');
+                            if (leaseTerm === '0') errors.push('Please select a lease term.');
+                            if (!pickupDate) errors.push('Pick up date is required.');
+                            if (pickupDate && returnDate) {
+                                var pd = new Date(pickupDate);
+                                var rd = new Date(returnDate);
+                                if (!isNaN(pd) && !isNaN(rd) && rd < pd) {
+                                    errors.push('Return date cannot be before pick up date.');
+                                }
+                            }
+
+                            if (errors.length) {
+                                e.preventDefault();
+                                errorBox.innerHTML = errors.join('<br>');
+                                errorBox.style.display = 'block';
+                                errorBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            } else {
+                                errorBox.style.display = 'none';
+                            }
+                        });
+                    })();
+                </script>
             </div>
         </div>
     </section>

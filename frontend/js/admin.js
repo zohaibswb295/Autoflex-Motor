@@ -11,6 +11,10 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginError = document.getElementById("admin-login-error");
   const logoutBtn = document.getElementById("admin-logout-btn");
 
+  Powers: stat cards, vehicle table (add/edit/delete), bookings table (status update).
+*/
+
+document.addEventListener("DOMContentLoaded", function () {
   const connBanner = document.getElementById("admin-conn-banner");
   const vehicleForm = document.getElementById("admin-vehicle-form");
   const vehicleTableBody = document.getElementById("admin-vehicle-tbody");
@@ -121,6 +125,9 @@ document.addEventListener("DOMContentLoaded", function () {
         fetch(`${API_BASE_URL}/admin/rentals`, { headers: authHeaders() }),
       ]);
       if (vehiclesRes.status === 401 || vehiclesRes.status === 403) return forceLogout();
+        fetch(`${API_BASE_URL}/vehicles`),
+        fetch(`${API_BASE_URL}/bookings`),
+      ]);
       const vehiclesData = await vehiclesRes.json();
       const bookingsData = await bookingsRes.json();
 
@@ -154,6 +161,9 @@ document.addEventListener("DOMContentLoaded", function () {
         : `${API_BASE_URL}/admin/fleet`;
       const res = await fetch(url, { headers: authHeaders() });
       if (res.status === 401 || res.status === 403) return forceLogout();
+        ? `${API_BASE_URL}/vehicles?category=${encodeURIComponent(currentFilter)}`
+        : `${API_BASE_URL}/vehicles`;
+      const res = await fetch(url);
       const result = await res.json();
 
       if (!result.success) throw new Error(result.error || "Failed to load vehicles");
@@ -230,6 +240,7 @@ document.addEventListener("DOMContentLoaded", function () {
         headers: authHeaders(),
       });
       if (res.status === 401 || res.status === 403) return forceLogout();
+      const res = await fetch(`${API_BASE_URL}/vehicles/${id}`, { method: "DELETE" });
       const result = await res.json();
       if (!result.success) throw new Error(result.error);
       loadVehicles();
@@ -264,6 +275,13 @@ document.addEventListener("DOMContentLoaded", function () {
           body: JSON.stringify(payload),
         });
         if (res.status === 401 || res.status === 403) return forceLogout();
+        const url = editingId ? `${API_BASE_URL}/vehicles/${editingId}` : `${API_BASE_URL}/vehicles`;
+        const method = editingId ? "PUT" : "POST";
+        const res = await fetch(url, {
+          method,
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+        });
         const result = await res.json();
         if (!result.success) throw new Error(result.error || "Save failed");
 
@@ -296,6 +314,7 @@ document.addEventListener("DOMContentLoaded", function () {
     try {
       const res = await fetch(`${API_BASE_URL}/admin/rentals`, { headers: authHeaders() });
       if (res.status === 401 || res.status === 403) return forceLogout();
+      const res = await fetch(`${API_BASE_URL}/bookings`);
       const result = await res.json();
       if (!result.success) throw new Error(result.error);
       hideConnError();
@@ -342,6 +361,11 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify({ status: select.value }),
           });
           if (res.status === 401 || res.status === 403) return forceLogout();
+          const res = await fetch(`${API_BASE_URL}/bookings/${id}/status`, {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ status: select.value }),
+          });
           const result = await res.json();
           if (!result.success) throw new Error(result.error);
           loadBookings();
@@ -371,5 +395,12 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
       showLogin();
     }
+  }
+});
+  // ---------- INIT (only runs if this page has the admin elements) ----------
+  if (vehicleTableBody || bookingTableBody) {
+    loadStats();
+    loadVehicles();
+    loadBookings();
   }
 });

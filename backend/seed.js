@@ -6,6 +6,8 @@ const bcrypt = require("bcryptjs");
 const connectDB = require("./config/db");
 const Vehicle = require("./models/Vehicle");
 const User = require("./models/User");
+const connectDB = require("./config/db");
+const Vehicle = require("./models/Vehicle");
 
 dotenv.config();
 
