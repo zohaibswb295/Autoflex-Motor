@@ -1,0 +1,273 @@
+/* =====================================================================
+   Used Car Dealership pillar — local styles only.
+   Scoped with the .ucd- prefix / #ucd- ids so nothing here leaks onto
+   or overrides the shared site-wide css/style.css.
+   ===================================================================== */
+
+/* ---------- Breadcrumb + sub-nav (Task: sub-navigation & breadcrumbs) --- */
+.ucd-breadcrumb-bar {
+  background: #f7f7f9;
+  padding: 14px 0;
+  border-bottom: 1px solid #ececec;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+  padding: 0;
+  font-size: 14px;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb li {
+  margin-right: 6px;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb li:not(:last-child)::after {
+  content: "/";
+  margin-left: 6px;
+  color: #b5b5b5;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb a {
+  color: #666;
+  text-decoration: none;
+  transition: color .2s ease;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb a:hover {
+  color: #d4a139;
+}
+.ucd-breadcrumb-bar .ucd-breadcrumb li.active {
+  color: #1c1c1c;
+  font-weight: 600;
+}
+
+.ucd-subnav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 12px;
+}
+.ucd-subnav a {
+  display: inline-block;
+  padding: 8px 16px;
+  border-radius: 30px;
+  border: 1px solid #e2e2e2;
+  color: #444;
+  font-size: 13px;
+  text-decoration: none;
+  transition: all .25s ease;
+}
+.ucd-subnav a:hover,
+.ucd-subnav a.active {
+  background: #1c1c1c;
+  border-color: #1c1c1c;
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* ---------- Feature grid ---------- */
+.ucd-feature-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 30px 25px;
+  height: 100%;
+  transition: transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+}
+.ucd-feature-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 15px 35px rgba(0,0,0,.08);
+  border-color: transparent;
+}
+.ucd-feature-card .icon {
+  font-size: 34px;
+  color: #d4a139;
+  margin-bottom: 18px;
+  transition: transform .3s ease;
+}
+.ucd-feature-card:hover .icon {
+  transform: scale(1.15) rotate(-4deg);
+}
+.ucd-feature-card h5 {
+  margin-bottom: 10px;
+}
+
+/* ---------- Financing / lease calculator ---------- */
+.ucd-calculator {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.ucd-calculator label {
+  font-weight: 600;
+  font-size: 13px;
+  margin-bottom: 6px;
+  display: block;
+}
+.ucd-calculator .form-control,
+.ucd-calculator input[type="range"] {
+  margin-bottom: 20px;
+}
+.ucd-calculator .ucd-range-value {
+  font-weight: 700;
+  color: #d4a139;
+}
+.ucd-result-box {
+  background: #1c1c1c;
+  color: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  text-align: center;
+}
+.ucd-result-box .ucd-monthly {
+  font-size: 42px;
+  font-weight: 800;
+  color: #d4a139;
+  line-height: 1;
+  margin: 10px 0;
+}
+.ucd-result-box .ucd-breakdown {
+  text-align: left;
+  margin-top: 20px;
+  font-size: 14px;
+}
+.ucd-result-box .ucd-breakdown div {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(255,255,255,.12);
+}
+
+/* ---------- Map / location widget ---------- */
+.ucd-map-wrap {
+  border-radius: 12px;
+  overflow: hidden;
+  height: 380px;
+  box-shadow: 0 10px 30px rgba(0,0,0,.08);
+}
+.ucd-map-wrap iframe {
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+.ucd-location-card {
+  background: #fff;
+  border: 1px solid #eee;
+  border-radius: 10px;
+  padding: 20px 22px;
+  margin-bottom: 14px;
+  transition: box-shadow .25s ease, transform .25s ease;
+}
+.ucd-location-card:hover {
+  box-shadow: 0 10px 25px rgba(0,0,0,.07);
+  transform: translateX(4px);
+}
+
+/* ---------- Comparison table ---------- */
+.ucd-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+.ucd-compare-table th,
+.ucd-compare-table td {
+  padding: 14px 16px;
+  border: 1px solid #eee;
+  text-align: center;
+  font-size: 14px;
+}
+.ucd-compare-table th {
+  background: #1c1c1c;
+  color: #fff;
+}
+.ucd-compare-table td:first-child,
+.ucd-compare-table th:first-child {
+  text-align: left;
+  font-weight: 600;
+}
+.ucd-compare-table .fa-solid.fa-check { color: #2fb344; }
+.ucd-compare-table .fa-solid.fa-xmark { color: #cccccc; }
+.ucd-compare-table tbody tr {
+  transition: background .2s ease;
+}
+.ucd-compare-table tbody tr:hover {
+  background: #faf6ea;
+}
+
+/* ---------- Booking / Inquiry form ---------- */
+.ucd-inquiry-form {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  box-shadow: 0 10px 40px rgba(0,0,0,.08);
+}
+.ucd-inquiry-form .ucd-field {
+  margin-bottom: 20px;
+}
+.ucd-inquiry-form label {
+  font-weight: 600;
+  font-size: 13px;
+  display: block;
+  margin-bottom: 6px;
+}
+.ucd-inquiry-form .ucd-error {
+  color: #e6423a;
+  font-size: 12px;
+  margin-top: 5px;
+  display: none;
+}
+.ucd-inquiry-form .ucd-field.has-error .ucd-error {
+  display: block;
+}
+.ucd-inquiry-form .ucd-field.has-error .form-control,
+.ucd-inquiry-form .ucd-field.has-error select {
+  border-color: #e6423a !important;
+}
+.ucd-inquiry-form button[disabled] {
+  opacity: .6;
+  cursor: not-allowed;
+}
+.ucd-form-msg {
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-radius: 8px;
+  font-size: 14px;
+  display: none;
+}
+.ucd-form-msg.success {
+  display: block;
+  background: #e9f9ee;
+  color: #1c7a35;
+  border: 1px solid #bfe9cc;
+}
+.ucd-form-msg.error {
+  display: block;
+  background: #fdecea;
+  color: #b3261e;
+  border: 1px solid #f6c6c2;
+}
+
+/* ---------- Micro-animations shared across the pillar ---------- */
+.ucd-fade-up {
+  animation: ucdFadeUp .6s ease both;
+}
+@keyframes ucdFadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ---------- Mobile responsiveness polish ---------- */
+@media (max-width: 991px) {
+  .ucd-calculator, .ucd-inquiry-form { padding: 26px; }
+  .ucd-result-box { padding: 26px; margin-top: 24px; }
+  .ucd-compare-table { display: block; overflow-x: auto; white-space: nowrap; }
+}
+@media (max-width: 767px) {
+  .ucd-breadcrumb-bar .ucd-breadcrumb { font-size: 12px; }
+  .ucd-subnav a { padding: 7px 12px; font-size: 12px; }
+  .ucd-map-wrap { height: 260px; }
+  .ucd-result-box .ucd-monthly { font-size: 32px; }
+}
+@media (max-width: 575px) {
+  .ucd-feature-card { padding: 22px 18px; }
+  .ucd-calculator, .ucd-inquiry-form, .ucd-result-box { padding: 20px; }
+}
