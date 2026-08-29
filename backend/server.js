@@ -11,6 +11,11 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+// Root route - test the base URL
+app.get("/", (req, res) => {
+  res.json({ success: true, message: "Autoflex Motor backend is live!" });
+});
+
 // Health check / test route
 app.get("/api/test", (req, res) => {
   res.json({ success: true, message: "Backend is running!" });
@@ -32,6 +37,13 @@ app.use((req, res) => {
 });
 
 const PORT = process.env.PORT || 5000;
-app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
-});
+
+// Local development ke liye listen karo, Vercel par nahi
+if (process.env.NODE_ENV !== "production") {
+  app.listen(PORT, () => {
+    console.log(`Server running on http://localhost:${PORT}`);
+  });
+}
+
+// Vercel ke liye app export karna zaroori hai
+module.exports = app;
