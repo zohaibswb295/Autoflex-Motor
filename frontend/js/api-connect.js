@@ -6,7 +6,7 @@
   Change API_BASE_URL to your live backend URL when you deploy.
 */
 
-const API_BASE_URL = "http://localhost:5000/api";
+const API_BASE_URL = "https://autoflex-motor-eta.vercel.app/api";
 
 // ---------- CONTACT FORM ----------
 // Works with the form that has class="contact__form" (used on contact.html, index.html, etc.)
